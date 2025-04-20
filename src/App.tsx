@@ -1,8 +1,10 @@
+import React from 'react';
+import LoginPage from './pages/login/login';
 
 function App() {
   return (
     <>
-     <h1>Proyecto</h1>
+      <LoginPage />
     </>
   )
 }
