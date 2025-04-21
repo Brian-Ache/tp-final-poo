@@ -28,8 +28,8 @@ export default function ListaUsuarios() {
           />
         </div>
       </div>
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-        <thead class="text-xs text-gray-700 uppercase  ">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 shadow-md border border-gray-200">
+        <thead class="text-xs text-gray-800 uppercase  bg-gray-300">
           <tr className="border-b border-gray-200">
             <th scope="col" class="px-6 py-3">
               Nombre
@@ -51,8 +51,8 @@ export default function ListaUsuarios() {
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="bg-white border-b border-gray-200">
+        <tbody className="">
+          <tr class="bg-white border-b border-gray-200 rounded-lg">
             <th
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -69,7 +69,7 @@ export default function ListaUsuarios() {
               </a>
             </td>
           </tr>
-          <tr class="bg-white border-b border-gray-200 ">
+          <tr class="bg-white border-b border-gray-200 rounded-lg">
             <th
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -86,7 +86,7 @@ export default function ListaUsuarios() {
               </a>
             </td>
           </tr>
-          <tr class="bg-white border-b border-gray-200">
+          <tr class="bg-white border-b border-gray-200 rounded-lg">
             <th
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -105,69 +105,7 @@ export default function ListaUsuarios() {
           </tr>
         </tbody>
       </table>
-      <nav
-        class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-        aria-label="Table navigation"
-      >
-        <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 "
-            >
-              Previous
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              1
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              2
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300    hover:bg-gray-100 hover:text-gray-700 "
-            >
-              3
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              4
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              5
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
-            >
-              Next
-            </a>
-          </li>
-        </ul>
-      </nav>
+      
     </div>
   );
 }
