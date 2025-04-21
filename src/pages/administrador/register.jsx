@@ -1,26 +1,29 @@
 import Header from "../../layouts/header";
+import HeaderAdm from "./headerAdm";
 
 
 export default function RegisterPage() {
   return (
   <>
-    <Header />
-    <p>PENSAR COMO PONER UN NAV PARA EL ADMINISTRADOR ENTRAR EN USUARIO,CREAR UUSUARIO Y VER TICKETS</p>
+    <HeaderAdm />
     <div className=" flex flex-col items-center mt-8 min-h-230">
-      <h2 className="text-base/7 font-semibold text-gray-900 text-lg mb-3">Registrar usuario</h2>
-      <p className="mt-1 text-sm/6 text-gray-600 mb-6">Ingrese los datos personales del usuario.</p>
+      
       <form className="border border-gray-200 rounded-lg shadow-md">
+      
         <div className="flex flex-col items-center px-10">
+          <div className="flex items-start justify-start w-full ">
+            <h2 className="text-base/7 font-semibold mt-7 text-xl">Registrar usuario</h2>
+          </div> 
           <div className="">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
-                <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-900">
-                  First name
+                <label htmlFor="nombre" className="block text-sm/6 font-medium text-gray-900">
+                  Nombre completo
                 </label>
                 <div className="mt-2">
                   <input
-                    id="first-name"
-                    name="first-name"
+                    id="nombre"
+                    name="nombre"
                     type="text"
                     autoComplete="given-name"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -29,13 +32,13 @@ export default function RegisterPage() {
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="last-name" className="block text-sm/6 font-medium text-gray-900">
-                  Last name
+                <label htmlFor="apellido" className="block text-sm/6 font-medium text-gray-900">
+                  Apellido
                 </label>
                 <div className="mt-2">
                   <input
-                    id="last-name"
-                    name="last-name"
+                    id="apellido"
+                    name="apellido"
                     type="text"
                     autoComplete="family-name"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -44,13 +47,13 @@ export default function RegisterPage() {
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                  Email address
+                <label htmlFor="mail" className="block text-sm/6 font-medium text-gray-900">
+                  Correo electronico
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
+                    id="mail"
+                    name="mail"
                     type="email"
                     autoComplete="email"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
