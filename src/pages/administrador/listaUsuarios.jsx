@@ -29,7 +29,7 @@ export default function ListaUsuarios() {
         </div>
       </div>
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 shadow-md border border-gray-200">
-        <thead class="text-xs text-gray-800 uppercase  bg-gray-300">
+        <thead class="text-xs text-gray-800 uppercase  bg-zinc-300">
           <tr className="border-b border-gray-200">
             <th scope="col" class="px-6 py-3">
               Nombre
@@ -65,7 +65,7 @@ export default function ListaUsuarios() {
             <td class="px-6 py-4">Bloqueado</td>
             <td class="px-6 py-4">
               <a href="#" class="font-medium text-indigo-600 ">
-              <button className="bg-indigo-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-indigo-500">Editar</button>
+              <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500">Editar</button>
               </a>
             </td>
           </tr>
@@ -82,7 +82,7 @@ export default function ListaUsuarios() {
             <td class="px-6 py-4">Bloqueado</td>
             <td class="px-6 py-4">
               <a href="#" class="font-medium text-indigo-600 ">
-                <button className="bg-indigo-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-indigo-500">Editar</button>
+                <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500">Editar</button>
               </a>
             </td>
           </tr>
@@ -99,7 +99,7 @@ export default function ListaUsuarios() {
             <td class="px-6 py-4">Bloqueado</td>
             <td class="px-6 py-4">
               <a href="#" class="font-medium text-indigo-600 ">
-              <button className="bg-indigo-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-indigo-500">Editar</button>
+              <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500 ">Editar</button>
               </a>
             </td>
           </tr>

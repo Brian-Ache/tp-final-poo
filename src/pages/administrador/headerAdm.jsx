@@ -27,7 +27,7 @@ export default function HeaderAdm() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start lg:justify-between">
             <div className="flex shrink-0 items-center">
-              <p className='text-indigo-700 font-bold text-xl'>tintaTech</p>
+              <p className='text-blue-700 font-bold text-xl'>tintaTech</p>
               <img
                 alt="Your Company"
                 src="./src/assets/logoSinLetra.png"
@@ -42,7 +42,7 @@ export default function HeaderAdm() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-indigo-600 text-white hover:bg-indigo-500' : 'text-gray-500 hover:bg-gray-500 hover:text-white',
+                      item.current ? 'bg-blue-600 text-white hover:bg-blue-500' : 'text-gray-500 hover:bg-gray-500 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium ',
                     )}
                   >
@@ -65,7 +65,7 @@ export default function HeaderAdm() {
               href={item.href}
               aria-current={item.current ? 'page' : undefined}
               className={classNames(
-                item.current ? 'bg-indigo-600 text-white' : 'text-gray-500 hover:bg-gray-500 hover:text-white',
+                item.current ? 'bg-blue-600 text-white' : 'text-gray-500 hover:bg-gray-500 hover:text-white',
                 'block rounded-md px-3 py-2 text-base font-medium ',
               )}
             >
