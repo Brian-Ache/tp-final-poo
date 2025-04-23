@@ -11,13 +11,15 @@
 
 import React from 'react'
 import HeaderAdm from './headerAdm';
+import GaleriaDeTickets from '../../components/cards/galeriaTickets';   
 import ListaUsuarios from './listaUsuarios';
 
 export default function MainAdm() {
     return(
         <div>
             <HeaderAdm/>
-            <ListaUsuarios/>
+             {/*<ListaUsuarios/>*/}
+            <GaleriaDeTickets/>
         </div>
         
     )
