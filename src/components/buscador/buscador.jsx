@@ -1,9 +1,14 @@
 
 
 
-export default function Buscador() {
+export default function Buscador({buscar}) {//recibe la función buscar(setFiltro) como prop(el padre sabe cuando el usuario escribe) 
+    
+    const handleChange = (e) => {// Esta función se ejecuta cuando el usuario escribe en el input
+        buscar(e.target.value); // Le avisa al padre lo que el usuario escribió
+    };
+
     return (
-        <form className="max-w-md mx-auto">
+        <form className="w-sm mr-8" onSubmit={(e) => e.preventDefault()}/*previene el comportamiento por defecto del formulario al hacer submit, que es recargar la página*/>
             {/* Etiqueta oculta para accesibilidad */}
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">
                 Buscar
@@ -15,6 +20,7 @@ export default function Buscador() {
                     type="submit"
                     className="absolute inset-y-0 start-0 flex items-center ps-3 text-gray-500 hover:text-gray-700 cursor-pointer"
                     aria-label="Buscar"
+                    
                 >
                     <svg
                         className="w-5 h-5"
@@ -39,6 +45,7 @@ export default function Buscador() {
                     className="block w-full p-4 ps-10 text-sm text-gray-900 border-1 border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Buscar tickets..."
                     required
+                    onChange={handleChange}// al hacer click en el botón, se ejecuta handleChange
                 />
             </div>
         </form>

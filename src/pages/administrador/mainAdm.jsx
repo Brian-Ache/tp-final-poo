@@ -12,15 +12,16 @@
 import React from 'react'
 import HeaderAdm from './headerAdm';
 import GaleriaDeTickets from '../../components/cards/galeriaTickets';   
-import ListaUsuarios from './listaUsuarios';
+import ListaUsuarios from './listaUsuariosAdm';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function MainAdm() {
+    const navigate = useNavigate();
     return(
         <div>
             <HeaderAdm/>
-             {/*<ListaUsuarios/>*/}
-            <GaleriaDeTickets/>
-        </div>
+        </div> 
         
     )
 

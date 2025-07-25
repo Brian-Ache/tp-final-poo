@@ -1,4 +1,20 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
+    const navigate = useNavigate();
+    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+        navigate('/mainAdm');
+        alert('Redirigiendo a la pagina principal del administrador');
+    /* Suponé que esta validación es correcta
+    if (user === 'admin' && password === '1234') {
+      // Redirige al home
+      navigate('/home');
+    } else {
+      alert('Credenciales incorrectas');
+    }*/
+    };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-5 lg:px-8 ">
@@ -9,7 +25,7 @@ export default function Login() {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm bg-white border border-gray-200 rounded-lg shadow-md p-12">
-            <form action="#" method="POST" className="space-y-6">
+            <form action="#" method="POST" className="space-y-6" onSubmit={handleLogin}>
               <div>
                 <label
                   htmlFor="email"

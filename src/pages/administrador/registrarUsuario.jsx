@@ -2,7 +2,7 @@ import Header from "../../layouts/header";
 import HeaderAdm from "./headerAdm";
 
 
-export default function RegisterPage() {
+export default function RegistrarUsuario() {
   return (
   <>
     <HeaderAdm />
@@ -115,14 +115,12 @@ export default function RegisterPage() {
             </div>
           </div>
         <div className="m-6 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm/6 font-semibold text-gray-900 hover:text-gray-400 cursor-pointer">
-            Cancel
-          </button>
+          
           <button
             type="submit"
             className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer"
           >
-            Save
+            Registrar
           </button>
         </div>
       </form>
