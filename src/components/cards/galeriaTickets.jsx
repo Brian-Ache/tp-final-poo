@@ -1,7 +1,7 @@
 import React from "react";
 import TicketCard from "./ticketCard";
 import Buscador from "../buscador/buscador";
-import MultipleSelect from "../selec/select"; // Importa el componente de selección si es necesario
+import MultipleSelect from "../selec/selectTickets"; // Importa el componente de selección si es necesario
 import { useState } from "react"; //Se usa para crear un estado local, en este caso para guardar el texto que el usuario escribe al buscar.
 
 const tickets = [
@@ -42,7 +42,7 @@ const tickets = [
     id: 4,
     titulo: "Problemas de conexión",
     descripcion: "Se corta el WiFi en mi oficina a cada rato...",
-    estado: "Atendido",
+    estado: "Resuleto",
     trabajadorCreador: "Lucía Torres",
     tecnicoAsignado: "Carlos Gómez",
     tecnicoAnterior: null,
@@ -53,7 +53,7 @@ const tickets = [
     id: 5,
     titulo: "Problemas de conexión",
     descripcion: "Se corta el WiFi en mi oficina a cada rato...",
-    estado: "Atendido",
+    estado: "Sin Resolver",
     trabajadorCreador: "Lucía Torres",
     tecnicoAsignado: "Carlos Gómez",
     tecnicoAnterior: null,
@@ -64,7 +64,7 @@ const tickets = [
     id: 6,
     titulo: "Problemas de conexión",
     descripcion: "Se corta el WiFi en mi oficina a cada rato...",
-    estado: "Atendido",
+    estado: "Reabierto",
     trabajadorCreador: "Lucía Torres",
     tecnicoAsignado: "Carlos Gómez",
     tecnicoAnterior: null,
@@ -75,7 +75,7 @@ const tickets = [
     id: 7,
     titulo: "Problemas de conexión",
     descripcion: "Se corta el WiFi en mi oficina a cada rato...",
-    estado: "Atendido",
+    estado: "Sin Resolver",
     trabajadorCreador: "Lucía Torres",
     tecnicoAsignado: "Carlos Gómez",
     tecnicoAnterior: null,

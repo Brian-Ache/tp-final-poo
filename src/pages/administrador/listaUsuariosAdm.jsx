@@ -1,117 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HeaderAdm from './headerAdm';
+import TablaUsuarios from '../../components/tablaUsuarios/tablaUsuarios';
+import BuscadorUsuarios from '../../components/buscador/buscadorUsuarios';
+import MultipleSelectUsuarios from '../../components/selec/selectUsuariosRol';
+import SelectUsuarioEstado from '../../components/selec/selectUsarioEstado';
+import ModalEditUser from '../../components/modal/modalVerUsuario';
+
+const usuariosMock = [
+  { id: 1453, nombre: 'Tomás', apellido: 'Aguirre', email: 'tomas@example.com', rol: 'Tecnico', estado: 'Activo', marcas: 2, fallas: 2 },
+  { id: 1001, nombre: 'Lucia', apellido: 'Fernandez', email: 'lucia@example.com', rol: 'Trabajador', estado: 'Bloqueado' },
+  { id: 1456, nombre: 'Tomás', apellido: 'Aguirre', email: 'tomas@example.com', rol: 'Tecnico', estado: 'Activo', marcas: 2, fallas: 2 },
+  { id: 1104, nombre: 'Mateo', apellido: 'Ramírez', email: 'mateo@example.com', rol: 'Trabajador', estado: 'Activo' },
+  { id: 1202, nombre: 'Sofia', apellido: 'Gomez', email: 'sofia@gmail.com', rol: 'Administrador', estado: 'Activo' },
+  { id: 1458, nombre: 'Tomás', apellido: 'Aguirre', email: 'tomas@example.com', rol: 'Tecnico', estado: 'Activo', marcas: 2, fallas: 2 },
+  { id: 1451, nombre: 'Tomás', apellido: 'Aguirre', email: 'tomas@example.com', rol: 'Tecnico', estado: 'Activo', marcas: 2, fallas: 2 },
+];
 
 export default function ListaUsuarios() {
+  const [usuarios, setUsuarios] = useState(usuariosMock);
+  const [busqueda, setBusqueda] = useState('');
+  const [filtroRol, setFiltroRol] = useState('Todos');
+  const [filtroEstado, setFiltroEstado] = useState('Todos');
+  const [modalAbierto, setModalAbierto] = useState(false);// Estado para controlar si el modal está abierto o cerrado.
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);// Estado para almacenar el usuario seleccionado para editar.
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  /*primero deberia filtrar por tecnico,trabajador,adn, luego por nombre,apellido o email o id*/
+  const usuariosFiltrados = usuarios.filter(
+    usuario =>
+    filtroEstado === 'Todos' || // Si el estado seleccionado es "Todos", no filtra por estado
+    usuario.estado === filtroEstado // Filtra por el estado seleccionado
+  ).filter(usuario =>
+    filtroRol === 'Todos' || // Si el rol seleccionado es "Todos", no filtra por rol
+    usuario.rol === filtroRol // Filtra por el rol seleccionado
+  ).filter(usuario =>//despues filtra por busqueda
+    usuario.id.toString().includes(busqueda) ||
+    usuario.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+    usuario.apellido.toLowerCase().includes(busqueda.toLowerCase()) ||
+    usuario.email.toLowerCase().includes(busqueda.toLowerCase())||
+    usuario.estado.toLowerCase().includes(busqueda.toLowerCase())
+  );
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  /* Funciones para manejar la apertura y cierre del modal de edición */
+  // Estas funciones se encargan de abrir y cerrar el modal, y de pasar el usuario
+
+  const abrirModal = (usuario) => {
+    console.log('abrir modal editar usuario con ID:', usuario.id);
+    setUsuarioSeleccionado(usuario);
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = () => {
+    setModalAbierto(false);
+    setUsuarioSeleccionado(null);
+  };
+
+  const guardarUsuario = (usuarioEditado) => {
+    setUsuarios(usuarios.map(u => u.id === usuarioEditado.id ? usuarioEditado : u));
+  };
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  //=========== Función para manejar la edición de un usuario============================
+  // Esta función se pasa como prop al componente TablaUsuarios y se ejecuta cuando se hace clic en el botón Editar de una fila.
+  const handleEditar = (usuario) => {
+  
+  abrirModal(usuario); // esto actualiza el estado y hace que se muestre el modal
+};
+
+
+
   return (
     <>
       <HeaderAdm />
-      <div class="overflow-x-auto shadow-md border border-gray-200 rounded-lg mt-10 mx-6 lg:mx-20 p-4">
-        <div class="pb-4 bg-white">
-          <div class="relative mt-1">
-            <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                class="w-4 h-4 text-gray-500"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="table-search"
-              class="block ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 h-8"
-              placeholder="Buscar Usuario"
-            />
+      <div className="overflow-x-auto shadow-md border border-gray-200 rounded-lg mt-10 mx-6 lg:mx-20 p-4">
+         <div className="my-10 flex justify-start items-center">
+                   <BuscadorUsuarios onBuscar={setBusqueda} />{/*Componente Buscador que recibe la función setFiltro(actualiza el valor de la variable filtro) como prop. cada vez que el usuario escribe en el componente Buscador se ejecuta setFiltro */}
+                   <div className='ml-4 w-60'>
+                      <MultipleSelectUsuarios rolSeleccionado={setFiltroRol} />
+                   </div>
+                   <div className='ml-4 w-60'>
+                      <SelectUsuarioEstado estadoSeleccionado={setFiltroEstado} />
+                   </div>
+                  
           </div>
-        </div>
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 shadow-md border border-gray-200">
-          <thead class="text-xs text-gray-800 uppercase  bg-zinc-300">
-            <tr className="border-b border-gray-200">
-              <th scope="col" class="px-6 py-3">
-                Nombre
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Apellido
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Correo electronico
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Id
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Estado
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody className="">
-            <tr class="bg-white border-b border-gray-200 rounded-lg">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                Lucia
-              </th>
-              <td class="px-6 py-4">Fernendez</td>
-              <td class="px-6 py-4">lucia.fernandez@example.com</td>
-              <td class="px-6 py-4">1001</td>
-              <td class="px-6 py-4">Bloqueado</td>
-              <td class="px-6 py-4">
-                <a href="#" class="font-medium text-indigo-600 ">
-                <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500">Editar</button>
-                </a>
-              </td>
-            </tr>
-            <tr class="bg-white border-b border-gray-200 rounded-lg">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                  Tomás
-              </th>
-              <td class="px-6 py-4">Aguirre</td>
-              <td class="px-6 py-4">tomas.aguirre@example.com</td>
-              <td class="px-6 py-4">1002</td>
-              <td class="px-6 py-4">Bloqueado</td>
-              <td class="px-6 py-4">
-                <a href="#" class="font-medium text-indigo-600 ">
-                  <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500">Editar</button>
-                </a>
-              </td>
-            </tr>
-            <tr class="bg-white border-b border-gray-200 rounded-lg">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-              >
-                  Mateo
-              </th>
-              <td class="px-6 py-4">Ramírez</td>
-              <td class="px-6 py-4">mateo.ramirez@example.com</td>
-              <td class="px-6 py-4">1003</td>
-              <td class="px-6 py-4">Bloqueado</td>
-              <td class="px-6 py-4">
-                <a href="#" class="font-medium text-indigo-600 ">
-                <button className="bg-blue-600 rounded-md text-white py-1 px-2 cursor-pointer hover:bg-blue-500 ">Editar</button>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
         
-      </div>
+        
+        <TablaUsuarios usuarios={usuariosFiltrados} onEditar={handleEditar} />{/*le paso los usuarios filtrados y la función onEditar para manejar la edición de usuarios. La funcion onEditar */}
+        <ModalEditUser
+          isOpen={modalAbierto}
+          onClose={cerrarModal}
+          user={usuarioSeleccionado}
+          onSave={guardarUsuario}
+        />{/* Componente ModalEditUser que se encarga de mostrar el modal para editar un usuario. Le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
+        {/*le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
+      </div>  
     </>
   );
 }

@@ -27,7 +27,10 @@ export default function MultipleSelect({ estadoSeleccionado }) {
         >
           <MenuItem value="Todos">Todos</MenuItem>
           <MenuItem value="Atendido">Atendido</MenuItem>
-          <MenuItem value="No atendido">No atendido</MenuItem> {/* Asegurate de que coincida con el string exacto del ticket */}
+          <MenuItem value="No atendido">No atendido</MenuItem>
+          <MenuItem value="Reabierto">Reabierto</MenuItem>
+          <MenuItem value="Sin Resolver">Sin Resolver</MenuItem>
+          <MenuItem value="Resuleto">Resuleto</MenuItem>
         </Select>
       </FormControl>
     </Box>
