@@ -20,7 +20,7 @@ export default function MainAdm() {
     const navigate = useNavigate();
     return(
         <div>
-            <HeaderAdm/>
+            <ListaUsuarios></ListaUsuarios>
         </div> 
         
     )

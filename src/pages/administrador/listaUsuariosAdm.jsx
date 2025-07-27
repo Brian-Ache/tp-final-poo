@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import HeaderAdm from './headerAdm';
 import TablaUsuarios from '../../components/tablaUsuarios/tablaUsuarios';
 import BuscadorUsuarios from '../../components/buscador/buscadorUsuarios';
@@ -23,6 +23,21 @@ export default function ListaUsuarios() {
   const [filtroEstado, setFiltroEstado] = useState('Todos');
   const [modalAbierto, setModalAbierto] = useState(false);// Estado para controlar si el modal está abierto o cerrado.
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);// Estado para almacenar el usuario seleccionado para editar.
+
+  //Fetch de datos reales al montar el componente (tecnica mixta para trabajar con datos reales y mock)
+  //asi cuando el backend este disponible, se puede usar sin problemas(ya que la API devuelve un array de objetos con la misma estructura que el mock)
+  useEffect(() => {
+    fetch('http://localhost:8080/api/usuarios')
+      .then((res) => res.json())
+      .then((data) => {
+        setUsuarios(data);
+      })
+      .catch((err) => {
+        console.error("⚠️ Backend no disponible. Usando datos mock.", err);
+      });
+  }, []);
+
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   /*primero deberia filtrar por tecnico,trabajador,adn, luego por nombre,apellido o email o id*/
