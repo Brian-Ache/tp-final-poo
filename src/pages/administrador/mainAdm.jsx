@@ -10,8 +10,8 @@
 //ACA PONGO EL HEADER Y LA PAGINA QUE ABRIO.SI ES LA LISTA DE USUARIOS(POR DEFEECTO) O LA LISTA DE TICKETS O CREAR USUARIO
 
 import React from 'react'
-import HeaderAdm from './headerAdm';
-import GaleriaDeTickets from '../../components/cards/galeriaTickets';   
+import HeaderAdm from '../../components/headers/headerAdm';
+import GaleriaDeTickets from '../../components/cards/ticketsADM/galeriaTickets';   
 import ListaUsuarios from './listaUsuariosAdm';
 import { useNavigate } from 'react-router-dom';
 

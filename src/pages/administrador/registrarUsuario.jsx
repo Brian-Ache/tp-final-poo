@@ -1,86 +1,122 @@
-import Header from "../../layouts/header";
-import HeaderAdm from "./headerAdm";
-
+import React, { useState } from "react";
+import HeaderAdm from '../../components/headers/headerAdm';
 
 export default function RegistrarUsuario() {
+
+  const [formData, setFormData] = useState({// Estado para almacenar los datos del formulario (que se enviarán al backend al registrar un nuevo usuario).
+    nombre: '',
+    apellido: '',
+    email: '',
+    idUsuario: '',
+    rol: 'trabajador',
+  });
+
+  const handleSubmit = (e) => {// Función que se ejecuta al enviar el formulario.
+    e.preventDefault();// Evita que la página se recargue al enviar el formulario.
+
+
+    // Aquí podrías hacer una llamada al backend para registrar el usuario.
+    // Por ejemplo, usando fetch o axios para enviar los datos a tu API.
+    // En este caso, simplemente se simula el envío de datos.
+    fetch('http://localhost:8080/api/usuarios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then(res => {// Verifica si la respuesta es exitosa
+        if (!res.ok) throw new Error('Error en la respuesta del servidor');// Lanza un error si la respuesta no es exitosa
+        return res.json();//Si fue exitosa, convierte la respuesta en JSON (res.json()), que también devuelve una promesa.
+      })
+      .then(data => {//Recibe los datos ya convertidos a JSON (data).(del then anterior)
+        //data es el objeto que devuelve el backend al registrar un usuario.
+        console.log('Usuario registrado:', data);
+        alert('✅ Usuario registrado con éxito');
+        setFormData({// Resetea el formulario a sus valores iniciales después de enviar los datos.
+          nombre: '',
+          apellido: '',
+          email: '',
+          idUsuario: '',
+          rol: 'trabajador',
+        });
+      })
+      .catch(err => {
+        console.log(formData)// Muestra los datos del formulario en la consola para depuración.
+        console.warn('⚠️ Backend no disponible. Usando datos fake.');
+        console.error(err);
+        alert('No se pudo conectar con el backend. Datos no enviados.');
+      });
+  };
+
   return (
-  <>
-    <HeaderAdm />
-    <div className=" flex flex-col items-center mt-8 min-h-230">
-      
-      <form className="border border-gray-200 rounded-lg shadow-md">
-      
-        <div className="flex flex-col items-center px-10">
-          <div className="flex items-start justify-start w-full ">
-            <h2 className="text-base/7 font-semibold mt-7 text-xl">Registrar usuario</h2>
-          </div> 
-          <div className="">
+    <>
+      <HeaderAdm />
+      <div className="flex flex-col items-center mt-8 min-h-230">
+        <form className="border border-gray-200 rounded-lg shadow-md" onSubmit={handleSubmit}>
+          <div className="flex flex-col items-center px-10">
+            <div className="flex items-start justify-start w-full">
+              <h2 className="text-base/7 font-semibold mt-7 text-xl">Registrar usuario</h2>
+            </div>
+
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
                 <label htmlFor="nombre" className="block text-sm/6 font-medium text-gray-900">
                   Nombre completo
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="nombre"
-                    name="nombre"
-                    type="text"
-                    autoComplete="given-name"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
-                  />
-                </div>
+                <input
+                  id="nombre"
+                  name="nombre"
+                  type="text"
+                  value={formData.nombre}
+                  onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
+                  className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
+                />
               </div>
 
               <div className="sm:col-span-3">
                 <label htmlFor="apellido" className="block text-sm/6 font-medium text-gray-900">
                   Apellido
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="apellido"
-                    name="apellido"
-                    type="text"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
-                  />
-                </div>
+                <input
+                  id="apellido"
+                  name="apellido"
+                  type="text"
+                  value={formData.apellido}
+                  onChange={(e) => setFormData({ ...formData, apellido: e.target.value })}
+                  className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
+                />
               </div>
 
               <div className="sm:col-span-4">
-                <label htmlFor="mail" className="block text-sm/6 font-medium text-gray-900">
-                  Correo electronico
+                <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                  Correo electrónico
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="mail"
-                    name="mail"
-                    type="email"
-                    autoComplete="email"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
-                  />
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
+                />
               </div>
 
               <div className="sm:col-span-3">
-                <label htmlFor="id" className="block text-sm/6 font-medium text-gray-900">
+                <label htmlFor="idUsuario" className="block text-sm/6 font-medium text-gray-900">
                   ID
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="idUsuario"
-                    name="idUsuario"
-                    type="text"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
-                  />
-                </div>
+                <input
+                  id="idUsuario"
+                  name="idUsuario"
+                  type="text"
+                  value={formData.idUsuario}
+                  onChange={(e) => setFormData({ ...formData, idUsuario: e.target.value })}
+                  className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
+                />
               </div>
-
             </div>
           </div>
 
-          
-        </div>
-        <div className="rolUsuarioChecks px-10 pb-10 border-b border-gray-900/10 ">
+          <div className="rolUsuarioChecks px-10 pb-10 border-b border-gray-900/10">
             <div className="mt-10 space-y-10">
               <fieldset>
                 <legend className="text-sm/6 font-semibold text-gray-900">Rol del Usuario</legend>
@@ -88,14 +124,16 @@ export default function RegistrarUsuario() {
                 <div className="mt-6 space-y-6">
                   <div className="flex items-center gap-x-3">
                     <input
-                      defaultChecked
                       id="trabajador"
                       name="rolUsuario"
                       type="radio"
-                      className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                      value="trabajador"
+                      checked={formData.rol === 'trabajador'}
+                      onChange={(e) => setFormData({ ...formData, rol: e.target.value })}
+                      className="size-4 appearance-none rounded-full border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-blue-600"
                     />
-                    <label htmlFor="trabajador" className="block text-sm/6 font-medium text-gray-900">
-                      trabajador
+                    <label htmlFor="trabajador" className="text-sm font-medium text-gray-900">
+                      Trabajador
                     </label>
                   </div>
                   <div className="flex items-center gap-x-3">
@@ -103,28 +141,30 @@ export default function RegistrarUsuario() {
                       id="tecnico"
                       name="rolUsuario"
                       type="radio"
-                      className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                      value="tecnico"
+                      checked={formData.rol === 'tecnico'}
+                      onChange={(e) => setFormData({ ...formData, rol: e.target.value })}
+                      className="size-4 appearance-none rounded-full border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-blue-600"
                     />
-                    <label htmlFor="tecnico" className="block text-sm/6 font-medium text-gray-900">
-                      Tecnico
+                    <label htmlFor="tecnico" className="text-sm font-medium text-gray-900">
+                      Técnico
                     </label>
                   </div>
-                  
                 </div>
               </fieldset>
             </div>
           </div>
-        <div className="m-6 flex items-center justify-end gap-x-6">
-          
-          <button
-            type="submit"
-            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer"
-          >
-            Registrar
-          </button>
-        </div>
-      </form>
-    </div>
-  </>
-  )
+
+          <div className="m-6 flex items-center justify-end gap-x-6">
+            <button
+              type="submit"
+              className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline-blue-600"
+            >
+              Registrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
 }

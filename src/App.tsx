@@ -4,6 +4,11 @@ import ListaUsuarios from './pages/administrador/listaUsuariosAdm';
 import MainAdm from './pages/administrador/mainAdm';
 import Login from './components/login/login';
 import ListaTicketsAdm from './pages/administrador/listaTicketsAdm';
+import MainTecnico from './pages/tecnico/mainTecnico.jsx';
+import MainTrabajador from './pages/trabajador/mainTrabajador';
+import AConfirmar from './pages/trabajador/aConfirmar.jsx';
+import TicketsTrabajador from './pages/trabajador/tickets.jsx';
+import CrearTicket from './pages/trabajador/crearTicket.jsx';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -28,7 +33,24 @@ function App() {
           {/* Ruta "/registrarUsuario" muestra formulario de registro */}
           <Route path="/registrarUsuario" element={<RegistrarUsuario />} />
 
-          {/* Ruta "/login" muestra el componente de Login */}
+          {/*Ruta "/mainTecnico" muestra pagina principal del tecnico*/}
+          
+          <Route path="/mainTecnico" element={<MainTecnico/>} />
+          
+          {/*Ruta "/mainTrabajador" muestra pagina principal del trabajador*/}
+          <Route path="/mainTrabajador" element={<MainTrabajador />} />
+
+          {/* Ruta "/aConfirmar" muestra tickets a confirmar */}
+          <Route path="/aConfirmar" element={<AConfirmar />} />
+
+          {/* Ruta "/ticketsTrabajador" muestra tickets del trabajador */}
+          <Route path="/ticketsTrabajador" element={<TicketsTrabajador />} />
+          
+          {/* Ruta "/crearTicket" muestra formulario para crear un ticket */}
+          <Route path="/crearTicket" element={<CrearTicket />} />
+
+          {/* Ruta "/login" muestra el componente de login */}
+        
         </Routes>
         
       </Router>      

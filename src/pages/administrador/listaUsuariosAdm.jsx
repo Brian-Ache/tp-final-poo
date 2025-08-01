@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import HeaderAdm from './headerAdm';
+import HeaderAdm from '../../components/headers/headerAdm';
 import TablaUsuarios from '../../components/tablaUsuarios/tablaUsuarios';
 import BuscadorUsuarios from '../../components/buscador/buscadorUsuarios';
 import MultipleSelectUsuarios from '../../components/selec/selectUsuariosRol';

@@ -1,18 +1,31 @@
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useState } from "react";
 
 export default function Login() {
+  // Simulación de usuario y contraseña
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+  
     const navigate = useNavigate();
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-        navigate('/mainAdm');
-        alert('Redirigiendo a la pagina principal del administrador');
-    /* Suponé que esta validación es correcta
+    //Suponé que esta validación es correcta
     if (user === 'admin' && password === '1234') {
       // Redirige al home
-      navigate('/home');
-    } else {
+      navigate('/mainAdm');
+    }
+    else if (user === 'tecnico' && password === '1234') {
+      // Redirige al home del técnico
+      navigate('/mainTecnico');
+    }
+    else if (user === 'trabajador' && password === '1234') {
+      // Redirige al home del cliente
+      navigate('/mainTrabajador');
+    }
+    else {
       alert('Credenciales incorrectas');
-    }*/
+    }
     };
 
   return (
@@ -35,12 +48,14 @@ export default function Login() {
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
+                    id="identification"
+                    name="identification"
+                    type="text"
                     required
-                    autoComplete="email"
+                    autoComplete="identification"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
                   />
                 </div>
               </div>
@@ -70,6 +85,8 @@ export default function Login() {
                     required
                     autoComplete="current-password"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
