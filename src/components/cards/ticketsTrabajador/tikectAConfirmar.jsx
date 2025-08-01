@@ -8,18 +8,12 @@ DEBE HACER UNA PETICION AL BACKEND PARA OBTENER LOS TICKETS RESUELTOS
 */
 
 
-export default function TicketAConfirmar({ ticket, onReabrirTicket }) {
+export default function TicketAConfirmar({ ticket}) {
   const [expandido, setExpandido] = useState(false);
   const [estadoTicket, setEstadoTicket] = useState(ticket.estado);
 
   const toggleExpandir = () => {
     setExpandido(!expandido);
-  };
-
-  const handleReabrir = () => {
-    onReabrirTicket(ticket.id)
-      .then(() => setEstadoTicket('abierto')) // actualización visual local
-      .catch((error) => console.error("Error al reabrir ticket:", error));
   };
 
   return (
@@ -35,12 +29,7 @@ export default function TicketAConfirmar({ ticket, onReabrirTicket }) {
           </p>
         )}
 
-        <Boton
-          onClick={toggleExpandir}
-          className="mt-3 text-blue-600 hover:underline text-sm font-medium cursor-pointer"
-        >
-          {expandido ? 'Ocultar detalles' : 'Ver más'}
-        </Boton>
+        
       </div>
 
       {expandido && (// Si está expandido, muestra más detalles)
@@ -60,15 +49,6 @@ export default function TicketAConfirmar({ ticket, onReabrirTicket }) {
                 <span className="font-medium">Técnico anterior:</span> {ticket.tecnicoAnterior}
               </p>
             </>
-          )}
-          {/*boton togle para reabrir ticket */}
-          {estadoTicket !== 'abierto' && (// si el ticket no está abierto)
-            <button
-              onClick={handleReabrir}
-              className="mt-3 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition cursor-pointer"
-            >
-              Reabrir ticket
-            </button>
           )}
         </div>
       )}
