@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Boton from '../../buttons/boton';
 
-export default function TicketCard({ ticket, onReabrirTicket }) {
+export default function TicketCard({ ticket}) {
   const [expandido, setExpandido] = useState(false);
   const [estadoTicket, setEstadoTicket] = useState(ticket.estado);
 

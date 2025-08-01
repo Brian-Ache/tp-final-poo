@@ -1,9 +1,9 @@
 import React from "react";
 import TicketAConfirmar from "./tikectAConfirmar";
 import Buscador from "../../buscador/buscador";
-import { useState } from "react"; //Se usa para crear un estado local, en este caso para guardar el texto que el usuario escribe al buscar.
+import { useState, useEffect } from "react"; //Se usa para crear un estado local, en este caso para guardar el texto que el usuario escribe al buscar.
 
-const tickets = [
+const arrayTickets = [
   {
     id: 1,
     titulo: "No funciona la impresora",
@@ -161,11 +161,37 @@ const tickets = [
   // otros tickets...
 ];
 
+
 export default function TicketsTrabajadorConfirm(/*aca iria la lista de tickets que se pasa como props desde el back*/) {
   const [filtro, setFiltro] = useState('');/*
   Crea una variable de estado llamada filtro que empieza vacía.
   setFiltro se usa para actualizar el valor de filtro cuando el usuario escribe.*/
+  const [tickets, setTickets] = useState([]); // Estado para almacenar los tickets obtenidos del backend
+
+
+
+  useEffect(() => {//useEffect se usa para ejecutar código después de que el componente se haya montado.
+  fetch('/api/tickets') // Reemplazá con tu URL real
+    .then(res => res.json())
+    .then(data => setTickets(data))
+    .catch(err => {
+      console.error('Error al obtener tickets', err)
+      setTickets(arrayTickets); // Si falla, usa los tickets por defecto del arreglo;
+    });
+}, []);
   
+  // Actualiza los tickets desde el backend
+  const actualizarTickets = () => {
+  fetch('/api/tickets')
+    .then(res => res.json())
+    .then(data => setTickets(data))
+    .catch(err => {
+      console.log('Utilizando tickets por defecto debido a un error al obtener los tickets del backend');
+      console.error('Error al refrescar tickets', err)
+      setTickets(arrayTicketstickets)}); // Si falla, usa los tickets por defecto del arreglo;
+};
+
+
   /////////////////////////////////////////////////
   /* FILTRA TEXTO*/
   ////////////////////////////////////////////////
@@ -184,7 +210,11 @@ export default function TicketsTrabajadorConfirm(/*aca iria la lista de tickets 
         <div className="flex justify-center items-center mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {ticketsFiltrados.map((ticket) => (
-            <TicketAConfirmar key={ticket.id} ticket={ticket} />
+            <TicketAConfirmar 
+            key={ticket.id} 
+            ticket={ticket}
+            onActualizarTicket={actualizarTickets} // Pasar la función para actualizar tickets al componente hijo
+            />
             ))}
         </div>
         </div>
