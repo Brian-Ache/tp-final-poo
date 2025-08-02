@@ -81,7 +81,7 @@ export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
             </button>
             <button
               onClick={() => noResuelto()}
-                className="mt-3 px-3 py-1 bg-red-600 text-white text-lg rounded hover:bg-red-800 transition cursor-pointer"
+                className="mt-3 px-3 py-1 bg-orange-400 text-white text-lg rounded hover:bg-orange-500 transition cursor-pointer"
             >
               No Resuelto
             </button>
