@@ -75,13 +75,13 @@ export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
           <div className='flex justify-around mt-3'>
             <button
               onClick={handleFinalizar}
-              className="mt-3 px-3 py-1 bg-blue-600 text-white text-lg rounded hover:bg-blue-800 transition cursor-pointer"
+              className="opacity-[0.75] mt-3 px-3 py-1 bg-blue-600 text-white text-lg rounded hover:bg-blue-800 transition cursor-pointer"
             >
               Finalizar
             </button>
             <button
               onClick={() => noResuelto()}
-                className="mt-3 px-3 py-1 bg-orange-400 text-white text-lg rounded hover:bg-orange-500 transition cursor-pointer"
+                className="opacity-[0.75] mt-3 px-3 py-1 bg-orange-400 text-white text-lg rounded hover:bg-orange-500 transition cursor-pointer"
             >
               No Resuelto
             </button>

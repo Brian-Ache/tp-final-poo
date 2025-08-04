@@ -48,7 +48,7 @@ export default function CrearTicket() {
     return (
       <>
         <HeaderTrabajador />
-        <div className="flex flex-col items-center mt-8 min-h-230">
+        <div className="flex flex-col items-center mt-30  h-screen">
           <form className="border border-gray-200 rounded-lg shadow-md" onSubmit={handleSubmit}>
             <div className="flex flex-col items-center px-10">
               <div className="flex items-start justify-start w-full">
@@ -80,13 +80,13 @@ export default function CrearTicket() {
                     rows={4}
                     value={formData.descripcion}
                     onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-                    className="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
+                    className="max-h-60 min-h-30 mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="m-6 flex items-center justify-end gap-x-6">
+            <div className="m-6 flex items-center justify-center gap-x-6">
               <button
                 type="submit"
                 className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline-blue-600 cursor-pointer"

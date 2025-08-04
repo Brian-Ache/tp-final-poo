@@ -1,11 +1,11 @@
 import React from 'react';
-import HeaderTrabajador from '../../components/headers/headerTrabajador';
+import HeaderTecnico from '../../components/headers/headerTecnico';
 
 
 export default function MainTecnico() {
   return (
     <>
-      <HeaderTrabajador />
+      <HeaderTecnico />
     </>
   );
 } 

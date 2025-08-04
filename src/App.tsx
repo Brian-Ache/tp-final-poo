@@ -32,10 +32,6 @@ function App() {
 
           {/* Ruta "/registrarUsuario" muestra formulario de registro */}
           <Route path="/registrarUsuario" element={<RegistrarUsuario />} />
-
-          {/*Ruta "/mainTecnico" muestra pagina principal del tecnico*/}
-          
-          <Route path="/mainTecnico" element={<MainTecnico/>} />
           
           {/*Ruta "/mainTrabajador" muestra pagina principal del trabajador*/}
           <Route path="/mainTrabajador" element={<MainTrabajador />} />
@@ -49,7 +45,8 @@ function App() {
           {/* Ruta "/crearTicket" muestra formulario para crear un ticket */}
           <Route path="/crearTicket" element={<CrearTicket />} />
 
-          {/* Ruta "/login" muestra el componente de login */}
+          {/*Ruta "/mainTecnico" muestra pagina principal del tecnico*/}
+          <Route path="/mainTecnico" element={<MainTecnico/>} />
         
         </Routes>
         
