@@ -46,3 +46,5 @@ npm run dev
 Una vez iniciado, abrí el navegador en la dirección que aparece en la consola, generalmente:
 
 http://localhost:5173/
+
+Para logearte usar tecnico, admin  o trabajador como usuario  y 1234 como pasword
