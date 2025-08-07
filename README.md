@@ -52,3 +52,61 @@ export default tseslint.config({
   },
 })
 ```
+🛠️ Proyecto Final POO - Interfaz Técnica
+📚 Tecnologías utilizadas
+Este proyecto fue desarrollado con:
+
+⚛️ React
+
+⚡ Vite – para desarrollo rápido y liviano
+
+🎨 Tailwind CSS – para estilos utilitarios
+
+🧩 MUI (Material UI) – librería de componentes UI
+
+✅ Requisitos previos
+Antes de empezar, asegurate de tener instalado lo siguiente en tu sistema:
+
+Node.js (recomendado: versión 18 o superior)
+
+npm (viene incluido con Node.js)
+
+Podés verificar si están instalados ejecutando:
+
+bash
+Copiar
+Editar
+node -v
+npm -v
+🚀 Instalación y ejecución del proyecto
+Cloná el repositorio:
+
+bash
+Copiar
+Editar
+git clone https://github.com/Brian-Ache/tp-final-poo.git
+Ingresá al directorio del proyecto:
+
+bash
+Copiar
+Editar
+cd tp-final-poo
+Instalá las dependencias:
+(Solo necesario la primera vez)
+
+bash
+Copiar
+Editar
+npm install
+Iniciá el servidor de desarrollo:
+
+bash
+Copiar
+Editar
+npm run dev
+Abrí tu navegador y accedé al enlace que aparece en la consola, generalmente algo como:
+
+arduino
+Copiar
+Editar
+http://localhost:5173/
