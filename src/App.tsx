@@ -1,14 +1,20 @@
+//importar page Login
 import LoginPage from './pages/login/login';
+//importar pages ADM
 import RegistrarUsuario from './pages/administrador/registrarUsuario';
 import ListaUsuarios from './pages/administrador/listaUsuariosAdm';
 import MainAdm from './pages/administrador/mainAdm';
-import Login from './components/login/login';
 import ListaTicketsAdm from './pages/administrador/listaTicketsAdm';
-import MainTecnico from './pages/tecnico/mainTecnico.jsx';
+//importar pager trabajador
 import MainTrabajador from './pages/trabajador/mainTrabajador';
 import AConfirmar from './pages/trabajador/aConfirmar.jsx';
 import TicketsTrabajador from './pages/trabajador/tickets.jsx';
 import CrearTicket from './pages/trabajador/crearTicket.jsx';
+//importar pager tecnico
+import MainTecnico from './pages/tecnico/mainTecnico.jsx';
+import TicketsTecnico from './pages/tecnico/ticketsTecnicoPag';
+import TicketsAResolver from './pages/tecnico/todosTicketsPag';
+
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -48,6 +54,13 @@ function App() {
           {/*Ruta "/mainTecnico" muestra pagina principal del tecnico*/}
           <Route path="/mainTecnico" element={<MainTecnico/>} />
         
+          {/*Ruta "/ticketsAResolver" muestra tickets a resolver del tecnico*/}
+          <Route path="/ticketsAResolverPag" element={<TicketsAResolver/>} />
+
+          {/* Ruta "/ticketsTecnico" muestra el componente de login */}
+          <Route path="/ticketsTecnicoPag" element={<TicketsTecnico />} />
+
+
         </Routes>
         
       </Router>      

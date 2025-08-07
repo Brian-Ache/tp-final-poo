@@ -1,5 +1,4 @@
-import React from "react";
-import TicketAConfirmar from "./tikectAConfirmar";
+import TicketTecnico from "./ticketTecnico";
 import Buscador from "../../buscador/buscador";
 import { useState, useEffect } from "react"; //Se usa para crear un estado local, en este caso para guardar el texto que el usuario escribe al buscar.
 
@@ -85,15 +84,15 @@ const arrayTickets = [
   // otros tickets...
 ];
 
-
-export default function TicketsTrabajadorConfirm() {
+/*MUESTRA TODOS LOS TICKETS QUE EL TECNICO PUEDE ELEGIR PARA RESOLVER(GET PETICION DE TIKCETS EN ESTO SIN RESOLVER)*/
+export default function TicketsTecnico() {
   const [filtro, setFiltro] = useState('');/*
   Crea una variable de estado llamada filtro que empieza vacía.
   setFiltro se usa para actualizar el valor de filtro cuando el usuario escribe.*/
   const [tickets, setTickets] = useState([]); // Estado para almacenar los tickets obtenidos del backend
 
   useEffect(() => {//useEffect se usa para ejecutar código después de que el componente se haya montado.
-  fetch('/api/tickets') // Reemplazá con tu URL real
+  fetch('/api/ticketsEstadoSinAtender') // Reemplazá con tu URL real
     .then(res => res.json())
     .then(data => setTickets(data))
     .catch(err => {
@@ -102,7 +101,7 @@ export default function TicketsTrabajadorConfirm() {
     });
 }, []);
   
-  // Actualiza los tickets desde el backend
+  // Actualiza los tickets desde el backend y  los trae de nuevo con los cambios ya hechos
   const actualizarTickets = () => {
   fetch('/api/tickets')
     .then(res => res.json())
@@ -132,7 +131,7 @@ export default function TicketsTrabajadorConfirm() {
         <div className="flex justify-center items-center mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {ticketsFiltrados.map((ticket) => (
-            <TicketAConfirmar 
+            <TicketTecnico 
             key={ticket.id} 
             ticket={ticket}
             onActualizarTicket={actualizarTickets} // Pasar la función para actualizar tickets al componente hijo

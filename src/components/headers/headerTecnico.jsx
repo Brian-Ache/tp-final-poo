@@ -11,9 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const navigation = [
-  { name: 'AResolver', to: '/ticketsAResolver', type: 'link' },
-  { name: 'Mis Tickets', to: '/ticketsTecnico', type: 'link' },
+  { name: 'Tickets', to: '/ticketsAResolverPag', type: 'link' },
+  { name: 'Mis Tickets', to: '/ticketsTecnicoPag', type: 'link' },
   { name: 'Marcas Y Fallas', type: 'panel' },
+  { name: 'Salir', to: '/', type: 'link' },
 ];
 
 function classNames(...classes) {

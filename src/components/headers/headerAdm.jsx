@@ -6,6 +6,7 @@ const navigation = [
   { name: 'Usuarios', to: '/lista-usuarios-adm' },
   { name: 'Tickets', to: '/lista-tickets-adm' },
   { name: 'Agregar Usuario', to: '/registrarUsuario' },
+  { name: 'Salir', to: '/', type: 'link' },
 ]
 
 function classNames(...classes) {
