@@ -1,32 +1,57 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Login() {
-  // Simulación de usuario y contraseña
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
-  
-    const navigate = useNavigate();
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    //Suponé que esta validación es correcta
-    if (user === 'admin' && password === '1234') {
-      // Redirige al home
-      navigate('/mainAdm');
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch('http://localhost:8080/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      alert("Credenciales Incorrectas");
+      throw new Error('Credenciales incorrectas');
     }
-    else if (user === 'tecnico' && password === '1234') {
-      // Redirige al home del técnico
-      navigate('/mainTecnico');
+
+    const data = await response.json();
+    //limpio el localstorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    //cargo el local storage con el token y el usuario
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("usuario", JSON.stringify(data.usuario));
+    console.log(data);
+    switch (data.usuario.rol) {
+      case 'ADMIN':
+        navigate('/mainAdm');
+        break;
+      case 'TECNICO':
+        navigate('/mainTecnico');
+        break;
+      case 'TRABAJADOR':
+        navigate('/mainTrabajador');
+        break;
+      default:
+        alert('Rol desconocido');
     }
-    else if (user === 'trabajador' && password === '1234') {
-      // Redirige al home del cliente
-      navigate('/mainTrabajador');
-    }
-    else {
-      alert('Credenciales incorrectas');
-    }
-    };
+  } catch (error) {
+    alert((error as Error).message);
+  }
+};
+
+
+
+
 
   return (
     <>
@@ -48,15 +73,17 @@ export default function Login() {
                 </label>
                 <div className="mt-2">
                   <input
-                    id="identification"
-                    name="identification"
+                    id="email"
+                    name="email"
                     type="text"
                     required
-                    autoComplete="identification"
+                    autoComplete="email"
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
-                    value={user}
-                    onChange={(e) => setUser(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
+
+
                 </div>
               </div>
 

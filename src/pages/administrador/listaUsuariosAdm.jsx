@@ -26,16 +26,32 @@ export default function ListaUsuarios() {
 
   //Fetch de datos reales al montar el componente (tecnica mixta para trabajar con datos reales y mock)
   //asi cuando el backend este disponible, se puede usar sin problemas(ya que la API devuelve un array de objetos con la misma estructura que el mock)
+
   useEffect(() => {
-    fetch('http://localhost:8080/api/usuarios')
-      .then((res) => res.json())
-      .then((data) => {
-        setUsuarios(data);
-      })
-      .catch((err) => {
-        console.error("⚠️ Backend no disponible. Usando datos mock.", err);
-      });
-  }, []);
+  const token = localStorage.getItem('token');
+  console.log("El token es: " + token);
+
+  fetch('http://localhost:8080/api/admin/usuarios', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      //'Content-Type': 'application/json', // opcional para GET
+    },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('Error al obtener usuarios');
+      return res.json();
+    })
+    .then((data) => {
+      setUsuarios(data);
+      console.log("los usuarios del backend son:");
+      console.log(data);
+    })
+    .catch((err) => {
+      console.error("⚠️ Backend no disponible. Usando datos mock.", err);
+    });
+}, []);
+
 
 
 
@@ -52,8 +68,7 @@ export default function ListaUsuarios() {
     usuario.id.toString().includes(busqueda) ||
     usuario.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
     usuario.apellido.toLowerCase().includes(busqueda.toLowerCase()) ||
-    usuario.email.toLowerCase().includes(busqueda.toLowerCase())||
-    usuario.estado.toLowerCase().includes(busqueda.toLowerCase())
+    usuario.email.toLowerCase().includes(busqueda.toLowerCase())
   );
   /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -27,9 +27,9 @@ export default function MultipleSelectUsuarios({ rolSeleccionado }) {
           size='small'
         >
           <MenuItem value="Todos">Todos</MenuItem>
-          <MenuItem value="Trabajador">Trabajador</MenuItem>
-          <MenuItem value="Tecnico">Tecnico</MenuItem>
-          <MenuItem value="Administrador">Administrador</MenuItem>
+          <MenuItem value="TRABAJADOR">Trabajador</MenuItem>
+          <MenuItem value="TECNICO">Tecnico</MenuItem>
+          <MenuItem value="ADMIN">Administrador</MenuItem>
         </Select>
       </FormControl>
     </Box>

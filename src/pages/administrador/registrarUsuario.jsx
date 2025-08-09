@@ -7,8 +7,8 @@ export default function RegistrarUsuario() {
     nombre: '',
     apellido: '',
     email: '',
-    idUsuario: '',
-    rol: 'trabajador',
+    rol: '',
+    rolAsString: '',
   });
 
   const handleSubmit = (e) => {// Función que se ejecuta al enviar el formulario.
@@ -18,9 +18,12 @@ export default function RegistrarUsuario() {
     // Aquí podrías hacer una llamada al backend para registrar el usuario.
     // Por ejemplo, usando fetch o axios para enviar los datos a tu API.
     // En este caso, simplemente se simula el envío de datos.
-    fetch('http://localhost:8080/api/usuarios', {
+     const token = localStorage.getItem('token');
+    fetch('http://localhost:8080/api/admin/usuarios', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+      'Authorization': `Bearer ${token}`,  
+      'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     })
       .then(res => {// Verifica si la respuesta es exitosa
@@ -35,8 +38,8 @@ export default function RegistrarUsuario() {
           nombre: '',
           apellido: '',
           email: '',
-          idUsuario: '',
-          rol: 'trabajador',
+          rol: '',
+          rolAsString: ''
         });
       })
       .catch(err => {
@@ -99,20 +102,6 @@ export default function RegistrarUsuario() {
                   className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
                 />
               </div>
-
-              <div className="sm:col-span-3">
-                <label htmlFor="idUsuario" className="block text-sm/6 font-medium text-gray-900">
-                  ID
-                </label>
-                <input
-                  id="idUsuario"
-                  name="idUsuario"
-                  type="text"
-                  value={formData.idUsuario}
-                  onChange={(e) => setFormData({ ...formData, idUsuario: e.target.value })}
-                  className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-blue-600 sm:text-sm/6"
-                />
-              </div>
             </div>
           </div>
 
@@ -127,9 +116,9 @@ export default function RegistrarUsuario() {
                       id="trabajador"
                       name="rolUsuario"
                       type="radio"
-                      value="trabajador"
-                      checked={formData.rol === 'trabajador'}
-                      onChange={(e) => setFormData({ ...formData, rol: e.target.value })}
+                      value="TRABAJADOR"
+                      checked={formData.rol === 'TRABAJADOR'}
+                      onChange={(e) => setFormData({ ...formData, rol: e.target.value,rolAsString: e.target.value })}
                       className="size-4 appearance-none rounded-full border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-blue-600"
                     />
                     <label htmlFor="trabajador" className="text-sm font-medium text-gray-900">
@@ -141,9 +130,9 @@ export default function RegistrarUsuario() {
                       id="tecnico"
                       name="rolUsuario"
                       type="radio"
-                      value="tecnico"
-                      checked={formData.rol === 'tecnico'}
-                      onChange={(e) => setFormData({ ...formData, rol: e.target.value })}
+                      value="TECNICO"
+                      checked={formData.rol === 'TECNICO'}
+                      onChange={(e) => setFormData({ ...formData, rol: e.target.value,rolAsString: e.target.value })}
                       className="size-4 appearance-none rounded-full border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-blue-600"
                     />
                     <label htmlFor="tecnico" className="text-sm font-medium text-gray-900">
