@@ -86,20 +86,35 @@ const arrayTickets = [
 
 
 export default function Ticket(/*aca iria la lista de tickets que se pasa como props desde el back*/) {
-  const [tickets,setTickets] = useState([]);
+  const [tickets,setTickets] = useState(arrayTickets);
   const [filtro, setFiltro] = useState('');/*
   Crea una variable de estado llamada filtro que empieza vacía.
   setFiltro se usa para actualizar el valor de filtro cuando el usuario escribe.*/
   
-  useEffect(() => {//useEffect se usa para ejecutar código después de que el componente se haya montado.
-  fetch('/api/ticketsTrabajador') // Reemplazá con tu URL real
-    .then(res => res.json())
-    .then(data => setTickets(data))
-    .catch(err => {
-      console.error('Error al obtener tickets', err)
-      setTickets(arrayTickets); // Si falla, usa los tickets por defecto del arreglo;
-    });
-}, []);
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      console.log("El token es: " + token);
+    
+      fetch('http://localhost:8080/api/tickets/trabajador/mis-tickets', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          //'Content-Type': 'application/json', // opcional para GET
+        },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Error al obtener tickets');
+          return res.json();
+        })
+        .then((data) => {
+          setTickets(data);
+          console.log("los tickets del backend son:");
+          console.log(data);
+        })
+        .catch((err) => {
+          console.error("⚠️ Backend no disponible. Usando datos mock.", err);
+        });
+    }, []);
 
 
 

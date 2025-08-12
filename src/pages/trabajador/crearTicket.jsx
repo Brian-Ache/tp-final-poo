@@ -19,9 +19,13 @@ export default function CrearTicket() {
       // Aquí podrías hacer una llamada al backend para registrar el ticket.
       // Por ejemplo, usando fetch o axios para enviar los datos a tu API.
       // En este caso, simplemente se simula el envío de datos.
-      fetch('http://localhost:8080/api/usuarios', {
+      const token = localStorage.getItem('token');
+      console.log("El token es: " + token);
+      fetch('http://localhost:8080/api/tickets/crear-tickets', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' },
         body: JSON.stringify(formData),// Convierte los datos del formulario a una cadena JSON para enviarlos al backend.
       })
         .then(res => {// Verifica si la respuesta es exitosa
