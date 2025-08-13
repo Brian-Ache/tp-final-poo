@@ -89,21 +89,44 @@ export default function TicketsTecnico() {
   const [filtro, setFiltro] = useState('');/*
   Crea una variable de estado llamada filtro que empieza vacía.
   setFiltro se usa para actualizar el valor de filtro cuando el usuario escribe.*/
-  const [tickets, setTickets] = useState([]); // Estado para almacenar los tickets obtenidos del backend
+  const [tickets, setTickets] = useState(arrayTickets); // Estado para almacenar los tickets obtenidos del backend
 
-  useEffect(() => {//useEffect se usa para ejecutar código después de que el componente se haya montado.
-  fetch('/api/ticketsEstadoSinAtender') // Reemplazá con tu URL real
-    .then(res => res.json())
-    .then(data => setTickets(data))
-    .catch(err => {
-      console.error('Error al obtener tickets', err)
-      setTickets(arrayTickets); // Si falla, usa los tickets por defecto del arreglo;
-    });
-}, []);
+  useEffect(() => {
+        const token = localStorage.getItem('token');
+        console.log("El token es: " + token);
+        
+        fetch(`http://localhost:8080/api/tickets/tecnico/tickets-disponibles`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            //'Content-Type': 'application/json', // opcional para GET
+          },
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error('Error al obtener tickets');
+            return res.json();
+          })
+          .then((data) => {
+            setTickets(data);
+            console.log("los tickets del backend son:");
+            console.log(data);
+          })
+          .catch((err) => {
+            console.error("⚠️ Backend no disponible. Usando datos mock.", err);
+          });
+      }, []);
   
   // Actualiza los tickets desde el backend y  los trae de nuevo con los cambios ya hechos
-  const actualizarTickets = () => {
-  fetch('/api/tickets')
+    const actualizarTickets = () => {
+    const token = localStorage.getItem('token');
+    console.log("El token es: " + token);
+    fetch(`http://localhost:8080/api/tickets/tecnico/tickets-disponibles`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            //'Content-Type': 'application/json', // opcional para GET
+          },
+    })
     .then(res => res.json())
     .then(data => setTickets(data))
     .catch(err => {

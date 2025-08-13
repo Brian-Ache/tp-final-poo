@@ -3,21 +3,32 @@
 /*el componente recibe un ticket como paremetro*/
 /*el componente tambien recibe la funcion AtualizarTicket que la ejecuta el padre para hacer el GET y mostrar los tickets nuevamente*/
 export default function TicketTecnico({ ticket, onActualizarTicket }) {
-
+    
     //////////////////////////////////////////////////////////////////////
     ////////////////////////////BACKEND///////////////////////////////////
-    
+    const token = localStorage.getItem('token');
+    //console.log("El ticket que estamos viendoe es este:"+ticket.id);
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const idUsuario = usuario && usuario.id ? usuario.id : null;
+
+    if (!idUsuario) {
+    console.warn("No se encontró el ID del técnico en localStorage.");
+    }
+    //console.log("el id el usuario es:"+ idUsuario);
+
     /*en el backend debe cambiar el estado del ticket a atendido*/
     const handleTomarTicket = () => { // Función para manejar la acción de tomar el ticket el ticket
-      fetch(`url_al_backend ${ticket.id}/tomarTicket`, {// Reemplaza con la URL delbackend
+      fetch(`http://localhost:8080/api/tecnico/tickets/${ticket.id}/tomar?idTecnico=${idUsuario}`, {// Reemplaza con la URL delbackend
         method: 'POST',
-        headers: {'Content-Type': 'application/json',},
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',},
         /*body: JSON.stringify({ estado: 'atendido' }) // enviar estado al backend*/ //si quisierar enviar el estado al backend
       }).then(response => {
         if (!response.ok) throw new Error('Error al tomar el ticket');
-        return response.json();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta
-      }).then(() => {
-        setEstadoTicket('atendido')// actualización visual local
+        return response.text();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta
+      }).then((r) => {
+        alert(r);
         onActualizarTicket(); // Llama a la función para actualizar los tickets en el componente padre
       }).catch((error) => console.error("Error al cambiar el estado del ticket", error));
   };
