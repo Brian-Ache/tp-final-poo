@@ -21,7 +21,7 @@ export default function CrearTicket() {
       // En este caso, simplemente se simula el envío de datos.
       const token = localStorage.getItem('token');
       console.log("El token es: " + token);
-      fetch('http://localhost:8080/api/tickets/crear-tickets', {
+      fetch('http://localhost:8080/api/tickets/crear-ticket', {
         method: 'POST',
         headers: { 
           'Authorization': `Bearer ${token}`,
