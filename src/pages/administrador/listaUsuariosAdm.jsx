@@ -23,7 +23,7 @@ export default function ListaUsuarios() {
   const [filtroEstado, setFiltroEstado] = useState('Todos');
   const [modalAbierto, setModalAbierto] = useState(false);// Estado para controlar si el modal está abierto o cerrado.
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);// Estado para almacenar el usuario seleccionado para editar.
-
+  const [idUsuario,setIdUsuario] = useState(null);
   //Fetch de datos reales al montar el componente (tecnica mixta para trabajar con datos reales y mock)
   //asi cuando el backend este disponible, se puede usar sin problemas(ya que la API devuelve un array de objetos con la misma estructura que el mock)
 
@@ -31,7 +31,7 @@ export default function ListaUsuarios() {
   const token = localStorage.getItem('token');
   console.log("El token es: " + token);
 
-  fetch('http://localhost:8080/api/admin/usuarios', {
+  fetch('http://localhost:8080/api/admin/usuarios/listar-todos', {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -76,8 +76,9 @@ export default function ListaUsuarios() {
   /* Funciones para manejar la apertura y cierre del modal de edición */
   // Estas funciones se encargan de abrir y cerrar el modal, y de pasar el usuario
 
-  const abrirModal = (usuario) => {
-    console.log('abrir modal editar usuario con ID:', usuario.id);
+  const abrirModal = (usuario,idUser) => {
+    console.log('abrir modal editar usuario con ID:', idUser);
+    setIdUsuario(idUser);
     setUsuarioSeleccionado(usuario);
     setModalAbierto(true);
   };
@@ -87,17 +88,55 @@ export default function ListaUsuarios() {
     setUsuarioSeleccionado(null);
   };
 
+  //FUNCION PARA ACTUALIZAR EL USUARIO LLAMADO AL BACKEND
+  const guardarUsuario = (usuarioEditado) => {
+  const token = localStorage.getItem('token');
+
+  // payload con solo los campos que el backend espera
+  const payload = {
+    nombre: usuarioEditado.nombre,
+    apellido: usuarioEditado.apellido,
+    email: usuarioEditado.email,
+  };
+  console.log("el id del usuario a editar es:"+usuarioEditado.id);
+  fetch(`http://localhost:8080/api/admin/usuarios/${usuarioEditado.id}/editar`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('Error al actualizar usuario');
+      return res.json();
+    })
+    .then((dataActualizada) => {
+      setUsuarios(usuarios.map(u => u.id === dataActualizada.id ? dataActualizada : u));
+      console.log('Usuario actualizado:', dataActualizada);
+    })
+    .catch((err) => {
+      console.error('Error al guardar usuario:', err);
+    });
+};
+
+
+
+
+
+  /*
   const guardarUsuario = (usuarioEditado) => {
     setUsuarios(usuarios.map(u => u.id === usuarioEditado.id ? usuarioEditado : u));
-  };
+  };*/
+
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   //=========== Función para manejar la edición de un usuario============================
   // Esta función se pasa como prop al componente TablaUsuarios y se ejecuta cuando se hace clic en el botón Editar de una fila.
-  const handleEditar = (usuario) => {
+  const handleEditar = (usuario,idUser) => {
   
-  abrirModal(usuario); // esto actualiza el estado y hace que se muestre el modal
+  abrirModal(usuario,idUser); // esto actualiza el estado y hace que se muestre el modal
 };
 
 
@@ -123,6 +162,7 @@ export default function ListaUsuarios() {
           isOpen={modalAbierto}
           onClose={cerrarModal}
           user={usuarioSeleccionado}
+          userId={idUsuario}
           onSave={guardarUsuario}
         />{/* Componente ModalEditUser que se encarga de mostrar el modal para editar un usuario. Le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
         {/*le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}

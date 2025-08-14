@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from "framer-motion"; // Importamos los compo
 import React from "react";
 import SelectUsuarioEstado from "../selec/selectUsarioEstado";
 
-export default function ModalEditUser({ isOpen, onClose, user, onSave }) {
+export default function ModalEditUser({ isOpen, onClose, user,userId, onSave }) {
   const [editedUser, setEditedUser] = React.useState(user);
+  
+
 
   React.useEffect(() => {
     // Si el usuario cambia, actualizamos el estado del usuario editado
@@ -20,6 +22,11 @@ export default function ModalEditUser({ isOpen, onClose, user, onSave }) {
     onSave(editedUser); // Llamamos a la función onSave para guardar los cambios
     onClose(); // Cerramos el modal después de guardar
   };
+
+  const handleEditarUsuario = () => {
+
+  }
+
 
   return (
     <AnimatePresence>

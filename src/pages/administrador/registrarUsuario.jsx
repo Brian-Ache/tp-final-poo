@@ -19,7 +19,7 @@ export default function RegistrarUsuario() {
     // Por ejemplo, usando fetch o axios para enviar los datos a tu API.
     // En este caso, simplemente se simula el envío de datos.
      const token = localStorage.getItem('token');
-    fetch('http://localhost:8080/api/admin/usuarios', {
+    fetch('http://localhost:8080/api/admin/usuarios/crear', {
       method: 'POST',
       headers: { 
       'Authorization': `Bearer ${token}`,  

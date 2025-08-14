@@ -99,7 +99,7 @@ export default function GaleriaDeTickets(/*aca iria la lista de tickets que se p
     const token = localStorage.getItem('token');
     console.log("El token es: " + token);
   
-    fetch('http://localhost:8080/api/admin/tickets', {
+    fetch('http://localhost:8080/api/tickets/todos', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
