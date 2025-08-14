@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"; // Importamos los compo
 import React from "react";
 import SelectUsuarioEstado from "../selec/selectUsarioEstado";
 
-export default function ModalEditUser({ isOpen, onClose, user,userId, onSave,onToggleEstado }) {
+export default function ModalEditUser({ isOpen, onClose, user,userId, onSave,onToggleEstado,onResetPassword }) {
   const [editedUser, setEditedUser] = React.useState(user);
   
 
@@ -138,6 +138,9 @@ export default function ModalEditUser({ isOpen, onClose, user,userId, onSave,onT
                 </div>
                 <button
                   type="submit"
+                  onClick={()=>{
+                    onResetPassword(editedUser)}
+                  }
                   className="h-10 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer text-md font-medium"
                 >
                   Reestablecer contraseña

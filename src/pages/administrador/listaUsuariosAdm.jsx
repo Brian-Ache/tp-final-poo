@@ -126,7 +126,8 @@ export default function ListaUsuarios() {
 //funcion para editar al usuario Activo/bloqueado llamado al backend
 const cambiarEstadoUsuario = (usuarioEditado) => {
   const token = localStorage.getItem('token');
-  const { id, bloqueado } = usuarioEditado;
+  const { id, bloqueado } = usuarioEditado;//- Extrae los campos id y bloqueado del objeto usuarioEditado.
+
 
   // Determinar orden de endpoints según toggle
   const endpoints = bloqueado
@@ -163,9 +164,29 @@ const cambiarEstadoUsuario = (usuarioEditado) => {
   ejecutarSecuencia();
 };
 
-
-
-
+const resetarPassword = (usuarioEditado) =>{
+  const token = localStorage.getItem('token');
+  const { id } = usuarioEditado;//- Extrae los campos id y bloqueado del objeto usuarioEditado.
+  fetch(`http://localhost:8080/api/admin/usuarios/${id}/reset-password`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('Error al actualizar usuario');
+      return res.json();
+    })
+    .then((dataActualizada) => {
+      setUsuarios(usuarios.map(u => u.id === dataActualizada.id ? dataActualizada : u));
+      console.log('Usuario actualizado:', dataActualizada);
+    })
+    .catch((err) => {
+      console.error('Error al guardar usuario:', err);
+    });
+}
 
 
   /*
@@ -209,6 +230,7 @@ const cambiarEstadoUsuario = (usuarioEditado) => {
           userId={idUsuario}
           onSave={guardarUsuario}
           onToggleEstado={cambiarEstadoUsuario}
+          onResetPassword={resetarPassword}
         />{/* Componente ModalEditUser que se encarga de mostrar el modal para editar un usuario. Le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
         {/*le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
       </div>  
