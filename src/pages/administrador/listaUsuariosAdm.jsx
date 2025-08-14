@@ -88,7 +88,7 @@ export default function ListaUsuarios() {
     setUsuarioSeleccionado(null);
   };
 
-  //FUNCION PARA ACTUALIZAR EL USUARIO LLAMADO AL BACKEND
+  //FUNCION PARA ACTUALIZAR EL USUARIO (nombre,apellido y mail) LLAMADO AL BACKEND
   const guardarUsuario = (usuarioEditado) => {
   const token = localStorage.getItem('token');
 
@@ -99,6 +99,8 @@ export default function ListaUsuarios() {
     email: usuarioEditado.email,
   };
   console.log("el id del usuario a editar es:"+usuarioEditado.id);
+  
+  
   fetch(`http://localhost:8080/api/admin/usuarios/${usuarioEditado.id}/editar`, {
     method: 'PUT',
     headers: {
@@ -118,7 +120,49 @@ export default function ListaUsuarios() {
     .catch((err) => {
       console.error('Error al guardar usuario:', err);
     });
+  
 };
+
+//funcion para editar al usuario Activo/bloqueado llamado al backend
+const cambiarEstadoUsuario = (usuarioEditado) => {
+  const token = localStorage.getItem('token');
+  const { id, bloqueado } = usuarioEditado;
+
+  // Determinar orden de endpoints según toggle
+  const endpoints = bloqueado
+    ? ["bloquear", "activar"]     // toggle = bloqueado
+    : ["activar", "bloquear"];    // toggle = activo
+
+  alert(`El usuario será ${bloqueado ? "bloqueado o activado" : "activado o bloqueado"}`);
+
+  // Ejecutar en orden secuencial
+  const ejecutarSecuencia = async () => {
+    try {
+      let dataFinal = null;
+
+      for (const endpoint of endpoints) {
+        const res = await fetch(`http://localhost:8080/api/admin/usuarios/${id}/${endpoint}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!res.ok) throw new Error(`Error en endpoint: ${endpoint}`);
+        dataFinal = await res.json(); // guardamos la última respuesta
+      }
+
+      setUsuarios(usuarios.map(u => u.id === dataFinal.id ? dataFinal : u));
+      console.log('✅ Usuario actualizado:', dataFinal);
+    } catch (err) {
+      console.error('❌ Error al actualizar estado del usuario:', err);
+    }
+  };
+
+  ejecutarSecuencia();
+};
+
 
 
 
@@ -164,6 +208,7 @@ export default function ListaUsuarios() {
           user={usuarioSeleccionado}
           userId={idUsuario}
           onSave={guardarUsuario}
+          onToggleEstado={cambiarEstadoUsuario}
         />{/* Componente ModalEditUser que se encarga de mostrar el modal para editar un usuario. Le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
         {/*le paso el estado del modal, la función para cerrarlo, el usuario seleccionado y la función para guardar los cambios. */}
       </div>  

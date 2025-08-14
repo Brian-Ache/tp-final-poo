@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"; // Importamos los compo
 import React from "react";
 import SelectUsuarioEstado from "../selec/selectUsarioEstado";
 
-export default function ModalEditUser({ isOpen, onClose, user,userId, onSave }) {
+export default function ModalEditUser({ isOpen, onClose, user,userId, onSave,onToggleEstado }) {
   const [editedUser, setEditedUser] = React.useState(user);
   
 
@@ -15,6 +15,9 @@ export default function ModalEditUser({ isOpen, onClose, user,userId, onSave }) 
 
   const handleChange = (e) => {
     setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
+    console.log("Datos del usuario:");
+    console.log(editedUser);
+
   };
 
   const handleSubmit = (e) => {
@@ -23,9 +26,6 @@ export default function ModalEditUser({ isOpen, onClose, user,userId, onSave }) 
     onClose(); // Cerramos el modal después de guardar
   };
 
-  const handleEditarUsuario = () => {
-
-  }
 
 
   return (
@@ -114,12 +114,12 @@ export default function ModalEditUser({ isOpen, onClose, user,userId, onSave }) 
                     </span>
                     <button
                       type="button"
-                      onClick={() =>
-                        setEditedUser({
-                          ...editedUser,
-                          bloqueado: !editedUser.bloqueado,
-                        })
-                      }
+                      onClick={() => {
+                        const nuevoEstado = !editedUser.bloqueado;
+                        const usuarioActualizado = { ...editedUser, bloqueado: nuevoEstado };
+                        setEditedUser(usuarioActualizado);
+                        onToggleEstado(usuarioActualizado); // ← llamada al backend
+                      }}        
                       className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-300
                         ${
                           editedUser?.bloqueado ? "bg-red-500" : "bg-blue-500"
