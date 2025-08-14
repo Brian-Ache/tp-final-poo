@@ -126,43 +126,31 @@ export default function ListaUsuarios() {
 //funcion para editar al usuario Activo/bloqueado llamado al backend
 const cambiarEstadoUsuario = (usuarioEditado) => {
   const token = localStorage.getItem('token');
-  const { id, bloqueado } = usuarioEditado;//- Extrae los campos id y bloqueado del objeto usuarioEditado.
+  const { id } = usuarioEditado;
 
-
-  // Determinar orden de endpoints según toggle
-  const endpoints = bloqueado
-    ? ["bloquear", "activar"]     // toggle = bloqueado
-    : ["activar", "bloquear"];    // toggle = activo
-
-  alert(`El usuario será ${bloqueado ? "bloqueado o activado" : "activado o bloqueado"}`);
-
-  // Ejecutar en orden secuencial
-  const ejecutarSecuencia = async () => {
+  const bloquearUsuario = async () => {
     try {
-      let dataFinal = null;
+      const res = await fetch(`http://localhost:8080/api/admin/usuarios/${id}/bloquear`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      for (const endpoint of endpoints) {
-        const res = await fetch(`http://localhost:8080/api/admin/usuarios/${id}/${endpoint}`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+      if (!res.ok) throw new Error('Error al bloquear usuario');
 
-        if (!res.ok) throw new Error(`Error en endpoint: ${endpoint}`);
-        dataFinal = await res.json(); // guardamos la última respuesta
-      }
-
+      const dataFinal = await res.json();
       setUsuarios(usuarios.map(u => u.id === dataFinal.id ? dataFinal : u));
-      console.log('✅ Usuario actualizado:', dataFinal);
+      console.log('✅ Usuario bloqueado:', dataFinal);
     } catch (err) {
-      console.error('❌ Error al actualizar estado del usuario:', err);
+      console.error('❌ Error al bloquear usuario:', err);
     }
   };
 
-  ejecutarSecuencia();
+  bloquearUsuario();
 };
+
 
 const resetarPassword = (usuarioEditado) =>{
   const token = localStorage.getItem('token');
