@@ -27,17 +27,22 @@ export default function HeaderTecnico() {
   const [panelPosition, setPanelPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef(null);
   const panelRef = useRef(null);
+  const [resumenIncidentes, setResumenIncidentes] = useState({ marcas: 0, fallas: 0 });
 
   const handleTogglePanel = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setPanelPosition({
-        top: rect.bottom + window.scrollY + 8, // Espacio entre el botón y el panel
-        left: rect.left + window.scrollX - 60, // Ajuste para centrar el panel
-      });
-    }
-    setShowPanel(prev => !prev);
-  };
+  if (buttonRef.current) {
+    const rect = buttonRef.current.getBoundingClientRect();
+    setPanelPosition({
+      top: rect.bottom + window.scrollY + 8,
+      left: rect.left + window.scrollX - 60,
+    });
+  }
+
+  if (!showPanel) obtenerResumenIncidentes(); // solo si se va a abrir
+
+  setShowPanel(prev => !prev);
+};
+
 
   // Cerrar el panel si se hace clic fuera
   useEffect(() => {
@@ -54,6 +59,41 @@ export default function HeaderTecnico() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  //peticion para obetner fallas y marcas
+  const obtenerResumenIncidentes = async () => {
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  const tecnicoId = usuario.id;
+  const token = localStorage.getItem('token');
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/tecnico/incidentes?tecnicoId=${tecnicoId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) throw new Error('Error al obtener incidentes');
+
+    const data = await response.json();
+
+    const resumen = data.reduce(
+      (acc, item) => {
+        if (item.tipo === "MARCA") acc.marcas += 1;
+        else if (item.tipo === "FALLA") acc.fallas += 1;
+        return acc;
+      },
+      { marcas: 0, fallas: 0 }
+    );
+
+    setResumenIncidentes(resumen);
+  } catch (error) {
+    console.error("Error al cargar resumen de incidentes:", error);
+  }
+};
+
 
   return (
     <Disclosure as="nav" className="bg-white border border-gray-200 shadow-md">
@@ -169,18 +209,25 @@ export default function HeaderTecnico() {
         leaveTo="opacity-0 scale-95"// la transición de salida termina con opacidad 0 y escala 95%
       >
         <div
-          ref={panelRef}
-          style={{
-            position: "absolute",
-            top: panelPosition.top,
-            left: panelPosition.left,
-          }}
-          className="z-50 w-64 rounded-md bg-white p-4 shadow-lg border border-gray-300"
-        >
-          <h2 className="text-lg font-semibold mb-2 ">Marcas y fallas</h2>
-          <p>Marcas: 2</p>
-          <p>Fallas: 1</p>
-        </div>
+  ref={panelRef}
+  style={{
+    position: "absolute",
+    top: panelPosition.top,
+    left: panelPosition.left,
+  }}
+  className="z-50 w-64 rounded-md bg-white p-4 shadow-lg border border-gray-300"
+>
+  <h2 className="text-lg font-semibold mb-2">Marcas y fallas</h2>
+  <div className="flex justify-between text-sm text-gray-700">
+    <span>Marcas:</span>
+    <span className="font-bold text-blue-700">{resumenIncidentes.marcas}</span>
+  </div>
+  <div className="flex justify-between text-sm text-gray-700 mt-1">
+    <span>Fallas:</span>
+    <span className="font-bold text-red-700">{resumenIncidentes.fallas}</span>
+  </div>
+</div>
+
       </Transition>
 
     
