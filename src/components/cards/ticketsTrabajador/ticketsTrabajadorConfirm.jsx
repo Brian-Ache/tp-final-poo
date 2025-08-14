@@ -92,8 +92,17 @@ export default function TicketsTrabajadorConfirm() {
   setFiltro se usa para actualizar el valor de filtro cuando el usuario escribe.*/
   const [tickets, setTickets] = useState([]); // Estado para almacenar los tickets obtenidos del backend
 
+  const token = localStorage.getItem('token');
+  console.log("El token es: " + token);
+
   useEffect(() => {//useEffect se usa para ejecutar código después de que el componente se haya montado.
-  fetch('/api/tickets') // Reemplazá con tu URL real
+  fetch('http://localhost:8080/api/tickets/trabajador/tickets-para-evaluar',{
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        //'Content-Type': 'application/json', // opcional para GET
+    },
+  }) // Reemplazá con tu URL real
     .then(res => res.json())
     .then(data => setTickets(data))
     .catch(err => {
@@ -104,7 +113,13 @@ export default function TicketsTrabajadorConfirm() {
   
   // Actualiza los tickets desde el backend
   const actualizarTickets = () => {
-  fetch('/api/tickets')
+  fetch('http://localhost:8080/api/tickets/trabajador/tickets-para-evaluar',{
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`,
+        //'Content-Type': 'application/json', // opcional para GET
+    },
+  })
     .then(res => res.json())
     .then(data => setTickets(data))
     .catch(err => {

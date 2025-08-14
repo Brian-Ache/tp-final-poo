@@ -11,6 +11,7 @@ DEBE HACER UNA PETICION AL BACKEND PARA OBTENER LOS TICKETS RESUELTOS
 export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
   const [estadoTicket, setEstadoTicket] = useState(ticket.estado);
 
+  //da el ticket como finalizado(la instancia siguiente resuelto)
   const handleFinalizar = () => { // Función para manejar la acción de finalizar el ticket
       fetch(`url_al_backend ${ticket.id}/finalizado`, {// Reemplaza con la URL delbackend
         method: 'POST',
@@ -24,6 +25,8 @@ export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
         onActualizarTicket(); // Llama a la función para actualizar los tickets en el componente padre
       }).catch((error) => console.error("Error al cambiar el estado del ticket", error));
   };
+
+  //le devuelve el ticket al backend para que los tecnicos lo puedan ver y tomar
   const noResuelto = () => {
     fetch(`url_al_backend ${ticket.id}/reabierto`, {// Reemplaza con la URL del backend
       method: 'POST',

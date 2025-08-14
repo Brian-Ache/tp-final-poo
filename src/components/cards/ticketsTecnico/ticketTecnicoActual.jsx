@@ -13,7 +13,7 @@ export default function TicketTecnicoActual({ ticket, onActualizarTicket }) {
   const idUsuario = usuario && usuario.id ? usuario.id : null;
 
   const handlerResuelto = () => { // Función para manejar la acción de ticket resuelto
-      fetch(`http://localhost:8080/tickets/${ticket.id}/finalizar`, {
+      fetch(`http://localhost:8080/api/tecnico/tickets/${ticket.id}/resolver`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
