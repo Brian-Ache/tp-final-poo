@@ -13,7 +13,7 @@ export default function TicketTecnicoActual({ ticket, onActualizarTicket }) {
   const idUsuario = usuario && usuario.id ? usuario.id : null;
 
   const handlerResuelto = () => { // Función para manejar la acción de ticket resuelto
-      fetch(`http://localhost:8080/api/tecnico/tickets/${ticket.id}/resolver`, {
+      fetch(`http://localhost:8080/api/tecnico/tickets/${ticket.id}/resolver?idTecnico=${idUsuario}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -21,8 +21,9 @@ export default function TicketTecnicoActual({ ticket, onActualizarTicket }) {
         /*body: JSON.stringify({ estado: 'Finalizado' }) // enviar estado al backend*/ //si quisierar enviar el estado al backend
       }).then(response => {
         if (!response.ok) throw new Error('Error al finalizar el ticket');
-        return response.json();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta
+        return response.text();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta
       }).then(() => {
+        alert("Ticket marcado como resuelto");
         onActualizarTicket(); // Llama a la función para actualizar los tickets en el componente padre
       }).catch((error) => console.error("Error al cambiar el estado del ticket", error));
   };
