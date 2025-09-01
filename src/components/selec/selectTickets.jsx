@@ -26,11 +26,11 @@ export default function MultipleSelect({ estadoSeleccionado }) {
           onChange={handleChange}
         >
           <MenuItem value="Todos">Todos</MenuItem>
-          <MenuItem value="Atendido">Atendido</MenuItem>
-          <MenuItem value="No atendido">No atendido</MenuItem>
-          <MenuItem value="Reabierto">Reabierto</MenuItem>
-          <MenuItem value="Sin Resolver">Sin Resolver</MenuItem>
-          <MenuItem value="Resuleto">Resuleto</MenuItem>
+          <MenuItem value="ATENDIDO">Atendido</MenuItem>
+          <MenuItem value="NO_ATENDIDO">No atendido</MenuItem>
+          <MenuItem value="REABIERTO">Reabierto</MenuItem>
+          <MenuItem value="FINALIZADO">Sin Resolver</MenuItem>
+          <MenuItem value="RESUELTO">Resuleto</MenuItem>
         </Select>
       </FormControl>
     </Box>

@@ -10,13 +10,21 @@ DEBE HACER UNA PETICION AL BACKEND PARA OBTENER LOS TICKETS RESUELTOS
 
 export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
   const [estadoTicket, setEstadoTicket] = useState(ticket.estado);
+  const [motivo,setMotivo] = useState("");
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const idUsuario = usuario.id;
 
   //da el ticket como finalizado(la instancia siguiente resuelto)
   const handleFinalizar = () => { // Función para manejar la acción de finalizar el ticket
-      fetch(`url_al_backend ${ticket.id}/finalizado`, {// Reemplaza con la URL delbackend
+      fetch((`http://localhost:8080/api/trabajador/tickets/${ticket.id}/evaluar`), {
         method: 'POST',
         headers: {'Content-Type': 'application/json',},
-        /*body: JSON.stringify({ estado: 'Finalizado' }) // enviar estado al backend*/ //si quisierar enviar el estado al backend
+        body: JSON.stringify({
+          "idTrabajador": idUsuario,
+          "fueResuelto": true,//por que fue resuelto
+          "motivo": motivo
+        }) // enviar estado al backend 
+        
       }).then(response => {
         if (!response.ok) throw new Error('Error al finalizar el ticket');
         return response.json();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta
@@ -28,10 +36,14 @@ export default function TicketAConfirmar({ ticket, onActualizarTicket }) {
 
   //le devuelve el ticket al backend para que los tecnicos lo puedan ver y tomar
   const noResuelto = () => {
-    fetch(`url_al_backend ${ticket.id}/reabierto`, {// Reemplaza con la URL del backend
+    fetch(`http://localhost:8080/api/trabajador/tickets/${ticket.id}/evaluar`, {// Reemplaza con la URL del backend
       method: 'POST',
       headers: {'Content-Type': 'application/json',},
-      /*body: JSON.stringify({ estado: 'reabierto' }) // enviar estado al backend*/ //si quisierar enviar el estado al backend
+      body: JSON.stringify({
+          "idTrabajador": idUsuario,
+          "fueResuelto": false,//por que no fue resuelto
+          "motivo": motivo
+        }) // enviar estado al backend 
     }).then(response => {
       if (!response.ok) throw new Error('Error al cambiar el estado del ticket');
       return response.json();// respose.json() devuelve una promesa que se resuelve con el cuerpo de la respuesta

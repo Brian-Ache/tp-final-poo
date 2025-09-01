@@ -79,16 +79,7 @@ export default function HeaderTecnico() {
 
     const data = await response.json();
 
-    const resumen = data.reduce(
-      (acc, item) => {
-        if (item.tipo === "MARCA") acc.marcas += 1;
-        else if (item.tipo === "FALLA") acc.fallas += 1;
-        return acc;
-      },
-      { marcas: 0, fallas: 0 }
-    );
-
-    setResumenIncidentes(resumen);
+    setResumenIncidentes(data);
   } catch (error) {
     console.error("Error al cargar resumen de incidentes:", error);
   }

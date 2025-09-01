@@ -31,7 +31,7 @@ export default function ListaUsuarios() {
   const token = localStorage.getItem('token');
   console.log("El token es: " + token);
 
-  fetch('http://localhost:8080/api/admin/usuarios/listar-todos', {
+  fetch('http://localhost:8080/api/admin/listar-usuarios', {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,

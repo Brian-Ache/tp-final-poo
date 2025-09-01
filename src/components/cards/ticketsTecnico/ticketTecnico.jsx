@@ -50,7 +50,7 @@ export default function TicketTecnico({ ticket, onActualizarTicket }) {
           <p>
             <span className="font-medium">Fecha de creación:</span> {ticket.fechaCreacion}
           </p>
-          {ticket.fueReabierto && (
+          {ticket.estado == "REABIERTO" && (
             <>
               <p>
                 <span className="font-medium">Reabierto:</span> Sí
